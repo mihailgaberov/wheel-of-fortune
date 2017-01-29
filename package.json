@@ -1,0 +1,30 @@
+{
+  "name": "wheel-of-fortune",
+  "version": "1.0.0",
+  "description": "A wheel of fortune component made with HTML5 and Phaser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mihailgaberov/wheel-of-fortune.git"
+  },
+  "keywords": [
+    "wheel",
+    "of",
+    "fortune",
+    "game",
+    "html5",
+    "phaser"
+  ],
+  "author": "Mihail Gaberov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mihailgaberov/wheel-of-fortune/issues"
+  },
+  "homepage": "https://github.com/mihailgaberov/wheel-of-fortune#readme",
+  "devDependencies": {
+    "phaser": "^2.6.2"
+  }
+}
