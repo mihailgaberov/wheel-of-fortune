@@ -1,20 +1,19 @@
 /**
  * Created by Mihail on 1/29/2017.
  */
-// the game itself
-var game;
+let game;
 // the spinning wheel
-var wheel;
+let wheel;
 // can the wheel spin?
-var canSpin;
+let canSpin;
 // slices (prizes) placed in the wheel
-var slices = 8;
+const slices = 8;
 // prize names, starting from 12 o'clock going clockwise
-var slicePrizes = ["A KEY!!!", "50 STARS", "500 STARS", "BAD LUCK!!!", "200 STARS", "100 STARS", "150 STARS", "BAD LUCK!!!"];
+const slicePrizes = ["A KEY!!!", "50 STARS", "500 STARS", "BAD LUCK!!!", "200 STARS", "100 STARS", "150 STARS", "BAD LUCK!!!"];
 // the prize you are about to win
-var prize;
+let prize;
 // text field where to show the prize
-var prizeText;
+let prizeText;
 
 window.onload = function() {
   // creation of a 458x488 game
@@ -23,29 +22,32 @@ window.onload = function() {
   game.state.add("PlayGame",playGame);
   // launching "PlayGame" state
   game.state.start("PlayGame");
-}
+};
 
 // PLAYGAME STATE
-
-var playGame = function(game){};
+const playGame = function(game) {};
 
 playGame.prototype = {
   // function to be executed once the state preloads
-  preload: function(){
+  preload: function() {
     // preloading graphic assets
     game.load.image("wheel", "images/wheel.png");
     game.load.image("pin", "images/pin.png");
   },
-  // funtion to be executed when the state is created
+  // function to be executed when the state is created
   create: function(){
     // giving some color to background
-    game.stage.backgroundColor = "#880044";
+    game.stage.backgroundColor = "#ffeeff";
+
+    // Stretch to fill
+    game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+
     // adding the wheel in the middle of the canvas
     wheel = game.add.sprite(game.width / 2, game.width / 2, "wheel");
     // setting wheel registration point in its center
     wheel.anchor.set(0.5);
     // adding the pin in the middle of the canvas
-    var pin = game.add.sprite(game.width / 2, game.width / 2, "pin");
+    const pin = game.add.sprite(game.width / 2, game.width / 2, "pin");
     // setting pin registration point in its center
     pin.anchor.set(0.5);
     // adding the text field
@@ -61,21 +63,24 @@ playGame.prototype = {
   },
   // function to spin the wheel
   spin(){
+    // Make it full screen on click
+    game.scale.startFullScreen(false);
+
     // can we spin the wheel?
     if(canSpin){
       // resetting text field
       prizeText.text = "";
       // the wheel will spin round from 2 to 4 times. This is just coreography
-      var rounds = game.rnd.between(2, 4);
+      const rounds = game.rnd.between(2, 4);
       // then will rotate by a random number from 0 to 360 degrees. This is the actual spin
-      var degrees = game.rnd.between(0, 360);
+      const degrees = game.rnd.between(0, 360);
       // before the wheel ends spinning, we already know the prize according to "degrees" rotation and the number of slices
       prize = slices - 1 - Math.floor(degrees / (360 / slices));
       // now the wheel cannot spin because it's already spinning
       canSpin = false;
-      // animation tweeen for the spin: duration 3s, will rotate by (360 * rounds + degrees) degrees
+      // animation tween for the spin: duration 3s, will rotate by (360 * rounds + degrees) degrees
       // the quadratic easing will simulate friction
-      var spinTween = game.add.tween(wheel).to({
+      const spinTween = game.add.tween(wheel).to({
         angle: 360 * rounds + degrees
       }, 3000, Phaser.Easing.Quadratic.Out, true);
       // once the tween is completed, call winPrize function
@@ -89,4 +94,4 @@ playGame.prototype = {
     // writing the prize you just won
     prizeText.text = slicePrizes[prize];
   }
-}
+};
